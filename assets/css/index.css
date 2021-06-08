@@ -1,0 +1,26 @@
+.container {
+  align-items: center;
+  justify-content: space-between;
+}
+
+#title {
+  margin: 50px;
+  text-align: center;
+  font-size: 50px;
+}
+
+.links-row {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#link {
+  height: 25px;
+}
+
+#apresentacao {
+  line-height: 25px;
+  margin-top: 10px;
+}

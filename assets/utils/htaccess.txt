@@ -1,0 +1,27 @@
+# localhost
+RewriteEngine On
+
+    RewriteCond %{HTTP_HOST} ^www\.cdprojetos\.site [NC]
+    RewriteRule (.*) http:/localhost:8080//$1 [R=301,L] 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /text.html?link=$1 [R=301,NC,L]
+    
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^localhost:8080$
+RewriteRule ^/?$ "https\:\/\/localhost:8080\/" [R=301,L]
+
+# production
+RewriteEngine On
+
+    RewriteCond %{HTTP_HOST} ^www\.cdprojetos\.site [NC]
+    RewriteRule (.*) https://cdprojetos\.site/$1 [R=301,L] 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /text.html?link=$1 [R=301,NC,L]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^cdprojetos\.site$
+RewriteRule ^/?$ "https\:\/\/cdprojetos\.site\/" [R=301,L]

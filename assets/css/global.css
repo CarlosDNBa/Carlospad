@@ -1,0 +1,33 @@
+:root {
+  --black: #f2f2f2;
+  --white: #1c1c1c;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+
+  text-align: center;
+  font-family: 'Courier New', courier, monospace;
+
+  color: var(--black);
+  background-color: var(--white);
+
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+button,
+textarea {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+input,
+button {
+  border: 1px solid var(--black);
+  height: 32px;
+  border-radius: 4px;
+}
