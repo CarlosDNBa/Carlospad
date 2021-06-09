@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const api = {
         load: {
             local: 'http://localhost:3000/load',
-            deployed: 'https://h96gfmt68h.execute-api.us-east-1.amazonaws.com/dev/load',
+            deployed: 'https://s40paiuyae.execute-api.us-east-1.amazonaws.com/master/load',
         },
 
         save: {
             local: 'http://localhost:3000/save',
-            deployed: 'https://h96gfmt68h.execute-api.us-east-1.amazonaws.com/dev/save',
+            deployed: 'https://s40paiuyae.execute-api.us-east-1.amazonaws.com/master/save',
         },
     }
 
