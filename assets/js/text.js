@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let typingTimer;
-    let doneTypingInterval = 1500;
+    let doneTypingInterval = 500;
 
     textarea.addEventListener('keyup', () => {
         clearTimeout(typingTimer);
