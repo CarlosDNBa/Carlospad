@@ -1,28 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const btn = document.getElementById('botao');
-    const linkInput = document.getElementById('link');
+	const btn = document.getElementById('botao');
+	const linkInput = document.getElementById('link');
 
-    linkInput.focus();
+	linkInput.focus();
 
-    function redirecionar() {
-        const newLocation = `${window.location.href}text.html?link=${linkInput.value}`;
-        console.log(newLocation);
-        window.location.href = newLocation;
-    }
+	function redirect() {
+		const newLocation = `${window.location.href}text.html?link=${linkInput.value}`;
+		console.log(newLocation);
+		window.location.href = newLocation;
+	}
 
-    function enter() {
-        const input = document.getElementById('link');
+	function enter() {
+		const input = document.getElementById('link');
 
-        input.addEventListener("keyup", function(event) {
+		input.addEventListener("keyup", function (event) {
 
-            if (event.keyCode === 13) {
+			if (event.keyCode === 13) {
 
-                redirecionar();
-            }
-        });
-    }
+				redirect();
+			}
+		});
+	}
 
-    btn.addEventListener('click', redirecionar);
-    linkInput.addEventListener('keypress', enter);
+	btn.addEventListener('click', redirect);
+	linkInput.addEventListener('keypress', enter);
 });
