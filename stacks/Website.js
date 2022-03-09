@@ -5,7 +5,7 @@ export default class Website extends Stack {
     super(scope, id, props);
 
     const { url } = new StaticSite(this, "www", {
-      path: "src",
+      path: "www",
     });
 
     // Show the URLs in the output
