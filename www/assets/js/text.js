@@ -6,19 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const urlParams = new URLSearchParams(queryString);
 	const link = urlParams.get('link');
 
-	const api = {
-		load: {
-			local: 'http://localhost:3000/load',
-			deployed: 'https://s40paiuyae.execute-api.us-east-1.amazonaws.com/master/load',
-		},
+	const api = 'https://e5estga55h.execute-api.us-east-1.amazonaws.com'
 
-		save: {
-			local: 'http://localhost:3000/save',
-			deployed: 'https://s40paiuyae.execute-api.us-east-1.amazonaws.com/master/save',
-		},
-	}
-
-	fetch(api.load.deployed, {
+	fetch(`${api}/load`, {
 		method: 'POST',
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ 'link': link })
@@ -35,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const text = textarea.value;
 		const reqBody = JSON.stringify({ link: link, text: text });
 
-		fetch(api.save.deployed, {
+		fetch(`${api}/save`, {
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },
 			body: reqBody
