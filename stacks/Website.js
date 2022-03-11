@@ -5,13 +5,10 @@ export default class Website extends Stack {
     super(scope, id, props);
 
     const tld = process.env.TLD
-    const domain = scope.stage === 'live'
-      ? tld
-      : `${scope.stage}.${tld}`
 
     const { url } = new StaticSite(this, "www", {
       path: "www",
-      customDomain: domain
+      customDomain: scope.stage === 'live' ? tld : undefined,
     });
 
     // Show the URLs in the output
