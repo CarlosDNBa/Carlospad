@@ -23,12 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function doneTyping() {
 		const text = textarea.value;
-		const reqBody = JSON.stringify({ link: link, text: text });
 
 		fetch(`${api}/save`, {
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },
-			body: reqBody
+			body: JSON.stringify({ link: link, text: text })
 		});
 	}
 
