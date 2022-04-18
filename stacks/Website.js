@@ -4,18 +4,15 @@ export default class Website extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    const tld = process.env.TLD
 
     const { url } = new ReactStaticSite(this, "website", {
       path: "app",
       environment: {
-        REACT_APP_API_GATEWAY_URL: props.apiUrl,
+        REACT_APP_API_GATEWAY_URL: props.domains.api,
       },
       customDomain: {
-        hostedZone: tld,
-        domainName: scope.stage === 'live'
-              ? tld
-              : `${scope.stage}.${tld}`
+        hostedZone: props.tld,
+        domainName: props.domains.website
       }
     });
 
