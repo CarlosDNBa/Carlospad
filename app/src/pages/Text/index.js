@@ -1,33 +1,23 @@
-import { useState, useEffect, useCallback } from 'react'
-import debounce from 'lodash/debounce'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { load, save } from '../../services/api'
+import { load } from '../../services/api'
+
+import Autosave from '../../components/Autosave'
 
 import './styles.css'
 
 const Text = () => {
   const [text, setText] = useState('')
+  const [wasFetched, setWasFetched] = useState(false)
   const link = useLocation().pathname.replace('/', '')
 
   useEffect(() => {
     (async () => {
       const response = await load(link)
       setText(response.data || '')
+      setWasFetched(true)
     })()
   }, [link])
-
-  const debounced = useCallback(debounce(() => {
-    console.log('saving')
-    console.log({ text })
-    save(link, text)
-  }, 500), [text])
-
-  const handleSave = (e) => {
-    e.preventDefault()
-    console.log('before debounce', e.target.value)
-    setText(e.target.value)
-    debounced()
-  }
 
   return (
     <div className="container">
@@ -38,8 +28,9 @@ const Text = () => {
         <textarea
           id="textarea"
           value={text}
-          onChange={handleSave}
+          onChange={(e) => wasFetched && setText(e.target.value)}
         />
+        <Autosave text={text} link={link} />
       </div>
     </div>
   )
