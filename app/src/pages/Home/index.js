@@ -6,7 +6,7 @@ const Home = () => {
   const [link, setLink] = useState('')
 
   return (
-    <div className="container">
+    <div className="home-container">
 
       <div id="title">
         <strong>CARLOSPAD</strong>

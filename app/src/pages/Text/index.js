@@ -21,7 +21,7 @@ const Text = () => {
   }, [link])
 
   return (
-    <div className="container">
+    <div className="text-container">
       <div className="is-loading">
       {
         isSaving

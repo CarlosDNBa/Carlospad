@@ -7,7 +7,7 @@ body {
   font-size: 20px;
 }
 
-.container {
+.text-container {
   padding: 8px;
   display: flex;
   flex-direction: column;
