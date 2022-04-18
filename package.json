@@ -5,6 +5,7 @@
   "scripts": {
     "test": "sst test",
     "start": "sst start",
+    "start:www": "cd app && yarn start",
     "build": "sst build",
     "deploy": "sst deploy",
     "remove": "sst remove"
