@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { save } from '../../services/api'
