@@ -22,41 +22,36 @@ const Text = () => {
 
   return (
     <div className="container">
-      <div className="warning">
-        <strong>Digite algo abaixo e o texto salva automaticamente! :)</strong>
-      </div>
-      <div className="textarea-container">
-        {
-          wasFetched
-            ? (
-              <>
-                <textarea
-                  id="textarea"
-                  value={text}
-                  onChange={(e) => wasFetched && setText(e.target.value)}
-                />
-                <Autosave
-                  text={text}
-                  link={link}
-                  isSaving={isSaving}
-                  setIsSaving={setIsSaving}
-                />
-              </>
-            )
-            : (
-              <span>Carregando seu texto...</span>
-            )
-        }
-      </div>
-
-      <br />
-      <br />
+      <div className="is-loading">
       {
         isSaving
           ? (
-            <span>Salvando...</span>
+            <strong>Salvando...</strong>
           ) : (
-            <span>Salvo!</span>
+            <strong>Texto salvo com sucesso.</strong>
+          )
+      }
+      </div>
+
+      {
+        wasFetched
+          ? (
+            <>
+              <textarea
+                id="textarea"
+                value={text}
+                onChange={(e) => wasFetched && setText(e.target.value)}
+              />
+              <Autosave
+                text={text}
+                link={link}
+                isSaving={isSaving}
+                setIsSaving={setIsSaving}
+              />
+            </>
+          )
+          : (
+            <span>Carregando seu texto...</span>
           )
       }
     </div>
