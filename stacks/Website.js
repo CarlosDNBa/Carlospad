@@ -11,7 +11,12 @@ export default class Website extends Stack {
       environment: {
         REACT_APP_API_GATEWAY_URL: props.apiUrl,
       },
-      customDomain: scope.stage === 'live' ? tld : undefined,
+      customDomain: {
+        hostedZone: tld,
+        domainName: scope.stage === 'live'
+              ? tld
+              : `${scope.stage}.${tld}`
+      }
     });
 
     // Show the URLs in the output
