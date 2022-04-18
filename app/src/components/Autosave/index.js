@@ -15,7 +15,9 @@ export default function Autosave({ link, text, isSaving, setIsSaving }) {
 
   const debouncedSave = useCallback(
     debounce(async (newText) => {
-      saveExperimentData(newText)
+      if (text !== newText) {
+        saveExperimentData(newText)
+      }
     }, DEBOUNCE_SAVE_DELAY_MS),
     []
   );
