@@ -2,20 +2,20 @@ import { useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { save } from '../../services/api'
 
-const DEBOUNCE_SAVE_DELAY_MS = 1000;
+const DEBOUNCE_SAVE_DELAY_MS = 500;
 
-export default function Autosave({ link, text }) {
+export default function Autosave({ link, text, isSaving, setIsSaving }) {
   // This is the side effect we want to run on users' changes.
   // In this example, we persist the changes in the localStorage.
   const saveExperimentData = useCallback(newText => {
-    save(link, newText)
-    console.log({ link, text: newText })
-    console.log('Saved successfully!');
+    // Adding "isSaving" to have a visual feedback.
+    setIsSaving(true)
+    save(link, newText).then(() => setIsSaving(false));
   }, []);
 
   const debouncedSave = useCallback(
     debounce(async (newText) => {
-      saveExperimentData(newText);
+      saveExperimentData(newText)
     }, DEBOUNCE_SAVE_DELAY_MS),
     []
   );
