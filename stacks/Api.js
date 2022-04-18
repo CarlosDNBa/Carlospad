@@ -34,6 +34,10 @@ export default class Api extends sst.Stack {
         'POST /save': {
           function: save
         }
+      },
+      customDomain: {
+        hostedZone: props.tld,
+        domainName: props.domains.api
       }
     });
 

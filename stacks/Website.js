@@ -1,14 +1,19 @@
-import { Stack, StaticSite } from "@serverless-stack/resources";
+import { Stack, ReactStaticSite } from "@serverless-stack/resources";
 
 export default class Website extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    const tld = process.env.TLD
 
-    const { url } = new StaticSite(this, "www", {
-      path: "www",
-      customDomain: scope.stage === 'live' ? tld : undefined,
+    const { url } = new ReactStaticSite(this, "website", {
+      path: "app",
+      environment: {
+        REACT_APP_API_GATEWAY_URL: props.domains.api,
+      },
+      customDomain: {
+        hostedZone: props.tld,
+        domainName: props.domains.website
+      }
     });
 
     // Show the URLs in the output
