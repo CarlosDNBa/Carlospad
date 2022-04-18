@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './styles.css'
 
 const Home = () => {
   const [link, setLink] = useState('')
-  console.log(link)
+
   return (
     <div className="container">
 
@@ -14,7 +15,11 @@ const Home = () => {
       <div className="links-row">
         https://carlospad.link/
         <input type="textarea" id="link" onChange={e => setLink(e.target.value)} />
-        <button type="submit" id="botao">Go!</button>
+        <Link to={`/${link}`}>
+          <button type="submit" id="botao">
+            Go!
+          </button>
+        </Link>
       </div>
 
       <div id="apresentacao">
