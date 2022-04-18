@@ -16,6 +16,6 @@ export default function main(app) {
   });
   app.addDefaultFunctionPermissions([table]);
 
-  new Api(app, "api");
-  new Website(app, "www");
+  const { api } = new Api(app, "api");
+  new Website(app, "www", { apiUrl: api.url });
 }
