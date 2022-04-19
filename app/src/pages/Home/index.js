@@ -20,14 +20,17 @@ const Home = () => {
         <strong>CARLOSPAD</strong>
       </div>
 
-      <div className="links-row">
-        https://carlospad.link/
-        <input type="textarea" id="link" onKeyDown={handleKeyDown} onChange={e => setLink(e.target.value)} />
-        <Link to={`/${link}`}>
-          <button type="submit" id="botao">
-            Go!
-          </button>
-        </Link>
+      <div className="links-box">
+        <span id='link'>https://carlospad.link/</span>
+        <div className='link-input-row'>
+          <input type="textarea" id="link-input" onKeyDown={handleKeyDown} onChange={e => setLink(e.target.value)} />
+          <Link id="button" to={`/${link}`}>
+            <button type="submit" id="botao">
+              Go!
+            </button>
+          </Link>
+        </div>
+
       </div>
 
       <div id="apresentacao">
