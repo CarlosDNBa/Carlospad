@@ -1,9 +1,17 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './styles.css'
 
 const Home = () => {
   const [link, setLink] = useState('')
+  const navigate = useNavigate()
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/${link}`)
+    }
+  }
+
 
   return (
     <div className="home-container">
@@ -14,7 +22,7 @@ const Home = () => {
 
       <div className="links-row">
         https://carlospad.link/
-        <input type="textarea" id="link" onChange={e => setLink(e.target.value)} />
+        <input type="textarea" id="link" onKeyDown={handleKeyDown} onChange={e => setLink(e.target.value)} />
         <Link to={`/${link}`}>
           <button type="submit" id="botao">
             Go!
