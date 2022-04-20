@@ -18,7 +18,6 @@
     "semi": 1,
     "class-methods-use-this": "off",
     "consistent-return": "off",
-    "no-console": "off",
     "arrow-parens": "off",
     "import/prefer-default-export": "off",
     "camelcase": "off",
