@@ -9,6 +9,7 @@
     "build": "sst build",
     "deploy": "sst deploy",
     "remove": "sst remove",
+    "prepare": "husky install",
     "lint": "eslint"
   },
   "eslintConfig": {
@@ -29,7 +30,7 @@
     "eslint": "8.6.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-plugin-prettier": "3.3.1",
-    "husky": "7.0.0",
+    "husky": "^7.0.4",
     "lint-staged": "12.1.7"
   },
   "lint-staged": {
