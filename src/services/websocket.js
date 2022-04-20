@@ -42,11 +42,9 @@ export const getConnections = async () => {
 };
 
 export const broadcastMessageToAll = async ({ message }) => {
-  const apigEndpoint = `20t1vgnu0e.execute-api.us-east-1.amazonaws.com/carlovsk`;
   const connections = await getConnections();
 
   const promises = connections.map(({ id }) => postToConnection({
-    endpoint: apigEndpoint,
     connectionId: id,
     message: JSON.stringify(message)
   }));

@@ -1,12 +1,13 @@
 import AWS from 'aws-sdk';
 import { endConnection } from './websocket';
 
-export const clientByEndpoint = endpoint => new AWS.ApiGatewayManagementApi({
-  endpoint,
+const wsApiG = process.env.WEBSOCKET_API_GATEWAY_URL.replace('wss://', '');
+
+export const client = new AWS.ApiGatewayManagementApi({
+  endpoint: wsApiG,
 });
 
-export const postToConnection = async ({ endpoint, connectionId, message }) => {
-  const client = clientByEndpoint(endpoint);
+export const postToConnection = async ({ connectionId, message }) => {
   try {
     const body = {
       ConnectionId: connectionId,

@@ -7,6 +7,13 @@ export default class Api extends sst.Stack {
 
     const { stackName } = this;
 
+    this.ws = new sst.WebSocketApi(this, 'ws', {
+      routes: {
+        $connect: 'src/websocket.connect',
+        $disconnect: 'src/websocket.disconnect'
+      },
+    });
+
     const healthCheck = new sst.Function(this, 'HealthCheck', {
       functionName: `${stackName}-health-check`,
       handler: 'src/handlers.healthCheck'
@@ -14,20 +21,20 @@ export default class Api extends sst.Stack {
 
     const load = new sst.Function(this, 'Load', {
       functionName: `${stackName}-load`,
-      handler: 'src/handlers.load'
+      handler: 'src/handlers.load',
+      environment: {
+        WEBSOCKET_API_GATEWAY_URL: this.ws.url
+      }
     });
 
     const save = new sst.Function(this, 'Save', {
       functionName: `${stackName}-save`,
-      handler: 'src/handlers.save'
+      handler: 'src/handlers.save',
+      environment: {
+        WEBSOCKET_API_GATEWAY_URL: this.ws.url
+      }
     });
 
-    this.ws = new sst.WebSocketApi(this, 'ws', {
-      routes: {
-        $connect: 'src/websocket.connect',
-        $disconnect: 'src/websocket.disconnect'
-      },
-    });
 
     this.rest = new sst.Api(this, 'rest', {
       cors: true,
