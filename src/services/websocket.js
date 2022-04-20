@@ -1,4 +1,5 @@
-import { putItem, deleteItem, query } from './ddbv2'
+import { putItem, deleteItem, query } from './ddbv2';
+import { postToConnection } from './api-gateway';
 
 export const startConnection = async connectionId => {
   const params = {
@@ -8,11 +9,11 @@ export const startConnection = async connectionId => {
       sk: connectionId,
       id: connectionId,
     }
-  }
+  };
 
-  const response = await putItem(params)
-  return response
-}
+  const response = await putItem(params);
+  return response;
+};
 
 export const endConnection = async connectionId => {
   const params = {
@@ -21,11 +22,11 @@ export const endConnection = async connectionId => {
       pk: 'connection',
       sk: connectionId,
     }
-  }
+  };
 
-  const response = await deleteItem(params)
-  return response
-}
+  const response = await deleteItem(params);
+  return response;
+};
 
 export const getConnections = async () => {
   const params = {
@@ -34,8 +35,20 @@ export const getConnections = async () => {
     ExpressionAttributeValues: {
       ':pk': 'connection'
     }
-  }
+  };
 
-  const response = await query(params)
-  return response.Items
-}
+  const response = await query(params);
+  return response.Items;
+};
+
+export const broadcastMessageToAll = async ({ message }) => {
+  const apigEndpoint = `20t1vgnu0e.execute-api.us-east-1.amazonaws.com/carlovsk`;
+  const connections = await getConnections();
+
+  const promises = connections.map(({ id }) => postToConnection({
+    endpoint: apigEndpoint,
+    connectionId: id,
+    message: JSON.stringify(message)
+  }));
+  await Promise.all(promises);
+};

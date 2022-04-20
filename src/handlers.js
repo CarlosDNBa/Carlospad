@@ -1,4 +1,5 @@
-import { PutItem, Query } from './dynamodb'
+import { PutItem, Query } from './dynamodb';
+import { broadcastMessageToAll } from './services/websocket';
 
 export const healthCheck = (event, context, callback) => callback(null, {
   statusCode: 200,
@@ -9,8 +10,14 @@ export const healthCheck = (event, context, callback) => callback(null, {
 
 export const save = async (event) => {
   const { link, text } = JSON.parse(event.body);
+  const { stage, domainName } = event.requestContext;
 
   await PutItem({ link, text });
+  await broadcastMessageToAll({
+    stage,
+    domainName,
+    message: { message: 'text updated', text }
+  });
 
   return {
     statusCode: 200,
