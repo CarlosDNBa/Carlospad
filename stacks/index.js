@@ -13,18 +13,19 @@ export default function main(app) {
       : `${app.stage}.api.${tld}`
   }
 
-  const { table } = new Storage(app, "storage");
+  const { table, connectionsTable } = new Storage(app, "storage");
   // Set default runtime for all functions
   app.setDefaultFunctionProps({
     timeout: 30,
     runtime: 'nodejs14.x',
     environment: {
       TABLE_NAME: table.tableName,
+      CONNECTIONS_TABLE_NAME: connectionsTable.tableName,
       PROJECT_NAME: app.name,
       STAGE: app.stage
     }
   });
-  app.addDefaultFunctionPermissions([table]);
+  app.addDefaultFunctionPermissions([table, connectionsTable]);
 
   new Api(app, "api", { tld, domains });
   new Website(app, "www", { tld, domains });

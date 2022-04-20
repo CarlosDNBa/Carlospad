@@ -22,7 +22,7 @@ export default class Api extends sst.Stack {
       handler: 'src/handlers.save'
     });
 
-    this.api = new sst.Api(this, 'api', {
+    new sst.Api(this, 'rest', {
       cors: true,
       routes: {
         'GET /health-check': {
@@ -41,8 +41,16 @@ export default class Api extends sst.Stack {
       }
     });
 
+    const wsApi = new sst.WebSocketApi(this, 'ws', {
+      routes: {
+        $connect: 'src/websocket.connect',
+        $disconnect: 'src/websocket.disconnect'
+      },
+    });
+
     this.addOutputs({
-      ApiEndpoint: this.api.url,
+      RestApiEndpoint: props.domains.api,
+      WebsocketApiEndpoint: wsApi.url
     });
   }
 }

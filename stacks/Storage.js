@@ -6,9 +6,18 @@ export default class Table extends sst.Stack {
 
     this.table = new sst.Table(this, 'text', {
       fields: {
-        link: sst.TableFieldType.STRING
+        link: 'string'
       },
       primaryIndex: { partitionKey: 'link' }
+    });
+
+    this.connectionsTable = new sst.Table(this, 'connections', {
+      fields: {
+        pk: 'string',
+        sk: 'string',
+        id: 'string'
+      },
+      primaryIndex: { partitionKey: 'pk', sortKey: 'sk' },
     });
   }
 }
