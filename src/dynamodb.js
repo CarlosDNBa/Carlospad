@@ -2,7 +2,7 @@ import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
 
 const client = new DynamoDBClient({});
-const tableName = process.env.TABLE_NAME
+const tableName = process.env.TABLE_NAME;
 
 // Adding ddb services
 export const PutItem = (item) => client.send(new PutItemCommand({

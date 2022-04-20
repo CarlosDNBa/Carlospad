@@ -1,6 +1,6 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from 'aws-sdk';
 
-const ddb = new DynamoDB.DocumentClient()
+const ddb = new DynamoDB.DocumentClient();
 
 export const putItem = async params => await ddb.put(params).promise();
 
