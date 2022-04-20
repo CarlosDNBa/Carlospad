@@ -25,7 +25,7 @@ export default function main(app) {
       STAGE: app.stage
     }
   });
-  app.addDefaultFunctionPermissions([table, connectionsTable]);
+  app.addDefaultFunctionPermissions([table, connectionsTable, 'execute-api:*']);
 
   new Api(app, "api", { tld, domains });
   new Website(app, "www", { tld, domains });
