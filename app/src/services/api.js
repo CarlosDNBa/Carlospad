@@ -13,7 +13,7 @@ export const load = async link => {
   return data
 }
 
-export const save = async (link, text) => {
-  const { data } = await client.post('save', { link, text })
+export const save = async (link, text, connId) => {
+  const { data } = await client.post('save', { link, text, connId })
   return data
 }

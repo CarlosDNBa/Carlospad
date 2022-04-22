@@ -5,13 +5,13 @@ import { save } from '../../services/api'
 
 const DEBOUNCE_SAVE_DELAY_MS = 500;
 
-export default function Autosave({ link, text, isSaving, setIsSaving }) {
+export default function Autosave({ link, text, connId, isSaving, setIsSaving }) {
   // This is the side effect we want to run on users' changes.
   // In this example, we persist the changes in the localStorage.
   const saveExperimentData = useCallback(newText => {
     // Adding "isSaving" to have a visual feedback.
     setIsSaving(true)
-    save(link, newText).then(() => setIsSaving(false));
+    save(link, newText, connId).then(() => setIsSaving(false))
   }, []);
 
   const debouncedSave = useCallback(
