@@ -1,13 +1,13 @@
-import { PutItem, Query } from '../dynamodb';
+import { getTextByLink, saveText } from '../services/text';
 import { broadcastMessageToOtherLinks } from '../services/websocket';
 
 export const save = async (event) => {
   const { link, text, connId } = JSON.parse(event.body);
 
   // Check if there has been any change to the text
-  const { text: existentText } = await Query(link);
+  const { text: existentText } = await getTextByLink(link);
   if (existentText !== text) {
-    await PutItem({ link, text });
+    await saveText({ link, text });
     await broadcastMessageToOtherLinks({
       link,
       connId,
@@ -26,7 +26,7 @@ export const save = async (event) => {
 export const load = async (event) => {
   const { link } = JSON.parse(event.body);
 
-  const data = await Query(link);
+  const data = await getTextByLink(link);
 
   if (data) {
     return {
@@ -41,7 +41,7 @@ export const load = async (event) => {
     };
   }
 
-  await PutItem({ link, text: '' });
+  await saveText({ link, text: '' });
 
   return {
     statusCode: 201,
