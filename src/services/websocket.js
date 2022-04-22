@@ -1,13 +1,15 @@
 import { putItem, deleteItem, query } from './ddbv2';
 import { postToConnection } from './api-gateway';
 
-export const startConnection = async connectionId => {
+export const startConnection = async (connectionId, link, connId) => {
   const params = {
     TableName: process.env.CONNECTIONS_TABLE_NAME,
     Item: {
       pk: 'connection',
       sk: connectionId,
       id: connectionId,
+      connId,
+      link,
     }
   };
 
@@ -28,7 +30,7 @@ export const endConnection = async connectionId => {
   return response;
 };
 
-export const getConnections = async () => {
+export const getConnectionsByLink = async ({ link, connId }) => {
   const params = {
     TableName: process.env.CONNECTIONS_TABLE_NAME,
     KeyConditionExpression: 'pk = :pk',
@@ -38,15 +40,23 @@ export const getConnections = async () => {
   };
 
   const response = await query(params);
-  return response.Items;
+  return response.Items.filter((currItem) => currItem.link === link && currItem.connId !== connId);
 };
 
-export const broadcastMessageToAll = async ({ message }) => {
-  const connections = await getConnections();
-
-  const promises = connections.map(({ id }) => postToConnection({
-    connectionId: id,
+export const broadcastMessageToOne = async ({ connectionId, message }) => {
+  await postToConnection({
+    connectionId: connectionId,
     message: JSON.stringify(message)
+  });
+};
+
+
+export const broadcastMessageToOtherLinks = async ({ message, link, connId }) => {
+  const connections = await getConnectionsByLink({ link, connId });
+
+  const promises = connections.map(({ id }) => broadcastMessageToOne({
+    connectionId: id,
+    message: message
   }));
   await Promise.all(promises);
 };

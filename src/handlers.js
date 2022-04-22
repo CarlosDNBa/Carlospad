@@ -1,5 +1,5 @@
 import { PutItem, Query } from './dynamodb';
-import { broadcastMessageToAll } from './services/websocket';
+import { broadcastMessageToOtherLinks } from './services/websocket';
 
 export const healthCheck = (event, context, callback) => callback(null, {
   statusCode: 200,
@@ -9,16 +9,18 @@ export const healthCheck = (event, context, callback) => callback(null, {
 });
 
 export const save = async (event) => {
-  const { link, text } = JSON.parse(event.body);
-  const { stage, domainName } = event.requestContext;
+  const { link, text, connId } = JSON.parse(event.body);
 
-  await PutItem({ link, text });
-  await broadcastMessageToAll({
-    stage,
-    domainName,
-    message: { message: 'text updated', text }
-  });
-
+  // Check if there has been any change to the text
+  const { text: existentText } = await Query(link);
+  if (existentText !== text) {
+    await PutItem({ link, text });
+    await broadcastMessageToOtherLinks({
+      link,
+      connId,
+      message: { message: 'text updated', text }
+    });
+  }
   return {
     statusCode: 200,
     headers: {
