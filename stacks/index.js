@@ -3,7 +3,7 @@ import Storage from "./Storage";
 import Website from "./Website";
 
 export default function main(app) {
-  const tld = process.env.TLD
+  const tld = process.env.TLD;
   const domains = {
     website: app.stage === 'live'
       ? tld
@@ -11,7 +11,7 @@ export default function main(app) {
     api: app.stage === 'live'
       ? `api.${tld}`
       : `${app.stage}.api.${tld}`
-  }
+  };
 
   const { table, connectionsTable } = new Storage(app, "storage");
   // Set default runtime for all functions
@@ -21,12 +21,13 @@ export default function main(app) {
     environment: {
       TABLE_NAME: table.tableName,
       CONNECTIONS_TABLE_NAME: connectionsTable.tableName,
+      DEBUG: `${app.name}:*`,
       PROJECT_NAME: app.name,
       STAGE: app.stage
     }
   });
   app.addDefaultFunctionPermissions([table, connectionsTable, 'execute-api:*']);
 
-  new Api(app, "api", { tld, domains });
-  new Website(app, "www", { tld, domains });
+  const { ws } = new Api(app, "api", { tld, domains });
+  new Website(app, "www", { tld, domains: { ...domains, ws: ws.url } });
 }

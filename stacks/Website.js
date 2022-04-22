@@ -9,6 +9,7 @@ export default class Website extends Stack {
       path: "app",
       environment: {
         REACT_APP_API_GATEWAY_URL: props.domains.api,
+        REACT_APP_WS_URL: props.domains.ws,
       },
       customDomain: {
         hostedZone: props.tld,
