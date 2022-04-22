@@ -1,12 +1,5 @@
-import { PutItem, Query } from './dynamodb';
-import { broadcastMessageToOtherLinks } from './services/websocket';
-
-export const healthCheck = (event, context, callback) => callback(null, {
-  statusCode: 200,
-  body: JSON.stringify({
-    health: true,
-  }),
-});
+import { PutItem, Query } from '../dynamodb';
+import { broadcastMessageToOtherLinks } from '../services/websocket';
 
 export const save = async (event) => {
   const { link, text, connId } = JSON.parse(event.body);

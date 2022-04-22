@@ -1,4 +1,3 @@
-
 import * as sst from '@serverless-stack/resources';
 
 export default class Api extends sst.Stack {
@@ -9,19 +8,19 @@ export default class Api extends sst.Stack {
 
     this.ws = new sst.WebSocketApi(this, 'ws', {
       routes: {
-        $connect: 'src/websocket.connect',
-        $disconnect: 'src/websocket.disconnect'
+        $connect: 'src/handlers/websocket.connect',
+        $disconnect: 'src/handlers/websocket.disconnect'
       },
     });
 
     const healthCheck = new sst.Function(this, 'HealthCheck', {
       functionName: `${stackName}-health-check`,
-      handler: 'src/handlers.healthCheck'
+      handler: 'src/handlers/health-check.healthCheck'
     });
 
     const load = new sst.Function(this, 'Load', {
       functionName: `${stackName}-load`,
-      handler: 'src/handlers.load',
+      handler: 'src/handlers/text.load',
       environment: {
         WEBSOCKET_API_GATEWAY_URL: this.ws.url
       }
@@ -29,7 +28,7 @@ export default class Api extends sst.Stack {
 
     const save = new sst.Function(this, 'Save', {
       functionName: `${stackName}-save`,
-      handler: 'src/handlers.save',
+      handler: 'src/handlers/text.save',
       environment: {
         WEBSOCKET_API_GATEWAY_URL: this.ws.url
       }
