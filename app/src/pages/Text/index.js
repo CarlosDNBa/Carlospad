@@ -15,7 +15,7 @@ const openConnection = async ({
   setText,
   connId
 }) => {
-  await new Sockette(`wss://20t1vgnu0e.execute-api.us-east-1.amazonaws.com/carlovsk?link=${link}&connId=${connId}`, {
+  await new Sockette(`${process.env.REACT_APP_WS_URL}?link=${link}&connId=${connId}`, {
     timeout: 53,
     maxAttempts: 10,
     onopen: e => {
