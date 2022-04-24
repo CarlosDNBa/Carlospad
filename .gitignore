@@ -15,6 +15,7 @@
 # sst build output
 .build
 .sst
+cdk.context.json
 
 # environments
 .env*.local

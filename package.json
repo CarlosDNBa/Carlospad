@@ -8,7 +8,9 @@
     "start:www": "cd app && yarn start",
     "build": "sst build",
     "deploy": "sst deploy",
-    "remove": "sst remove"
+    "remove": "sst remove",
+    "prepare": "husky install",
+    "lint": "eslint"
   },
   "eslintConfig": {
     "extends": [
@@ -20,12 +22,20 @@
     "@aws-sdk/client-dynamodb": "3.32.0",
     "@aws-sdk/util-dynamodb": "3.32.0",
     "@middy/core": "^1.0.0",
-    "@serverless-stack/cli": "0.68.0",
-    "@serverless-stack/resources": "0.68.0"
+    "@serverless-stack/cli": "1.0.0-beta.21",
+    "@serverless-stack/resources": "1.0.0-beta.21",
+    "treq": "^1.0.1"
   },
   "devDependencies": {
     "aws-sdk": "^2.1008.0",
-    "husky": "7.0.0",
+    "eslint": "8.6.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-plugin-prettier": "3.3.1",
+    "husky": "^7.0.4",
     "lint-staged": "12.1.7"
+  },
+  "lint-staged": {
+    "*.js": "yarn lint --fix",
+    "*.ts": "yarn lint --fix"
   }
 }
