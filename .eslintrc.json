@@ -16,6 +16,10 @@
   ],
   "rules": {
     "semi": 1,
+    "quotes": [
+      1,
+      "single"
+    ],
     "class-methods-use-this": "off",
     "consistent-return": "off",
     "arrow-parens": "off",

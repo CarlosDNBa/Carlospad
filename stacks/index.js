@@ -1,7 +1,7 @@
-import { RemovalPolicy } from "aws-cdk-lib";
-import Api from "./Api";
-import Storage from "./Storage";
-import Website from "./Website";
+import { RemovalPolicy } from 'aws-cdk-lib';
+import Api from './Api';
+import Storage from './Storage';
+import Website from './Website';
 
 export default function main(app) {
   const tld = process.env.TLD;
@@ -14,10 +14,10 @@ export default function main(app) {
       : `${app.stage}.api.${tld}`
   };
 
-  const { table, connectionsTable } = new Storage(app, "storage");
+  const { table, connectionsTable } = new Storage(app, 'storage');
 
   // Remove all resources when the dev stage is removed
-  if (app.stage !== "live") {
+  if (app.stage !== 'live') {
     app.setDefaultRemovalPolicy(RemovalPolicy.DESTROY);
   }
 
@@ -35,6 +35,6 @@ export default function main(app) {
   });
   app.addDefaultFunctionPermissions([table, connectionsTable, 'execute-api:*']);
 
-  const { ws } = new Api(app, "api", { tld, domains });
-  new Website(app, "www", { tld, domains: { ...domains, ws: ws.url } });
+  const { ws } = new Api(app, 'api', { tld, domains });
+  new Website(app, 'www', { tld, domains: { ...domains, ws: ws.url } });
 }
