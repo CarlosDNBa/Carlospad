@@ -1,3 +1,4 @@
+import { RemovalPolicy } from "aws-cdk-lib";
 import Api from "./Api";
 import Storage from "./Storage";
 import Website from "./Website";
@@ -14,6 +15,12 @@ export default function main(app) {
   };
 
   const { table, connectionsTable } = new Storage(app, "storage");
+
+  // Remove all resources when the dev stage is removed
+  if (app.stage !== "live") {
+    app.setDefaultRemovalPolicy(RemovalPolicy.DESTROY);
+  }
+
   // Set default runtime for all functions
   app.setDefaultFunctionProps({
     timeout: 30,
